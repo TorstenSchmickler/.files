@@ -58,7 +58,7 @@ export PATH=~/bin:$PATH # user scripts
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
-
+source /usr/local/etc/profile.d/z.sh
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -78,13 +78,20 @@ setopt share_history
 #
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-#
-#  LUNCHY_DIR=$(dirname `gem which lunchy`)/../extras
-#    if [ -f $LUNCHY_DIR/lunchy-completion.zsh ]; then
-#          . $LUNCHY_DIR/lunchy-completion.zsh
-#            fi
+alias corelog='tail -f log/`date '+%Y-%m-%d'`.core.log'
+alias frontlog='tail -f log/`date '+%Y-%m-%d'`.front.log'
+alias sandbox='ssh sandbox-backend'
+alias staging='ssh staging-backend'
+alias pro-a='ssh production-backend-a'
+alias pro-b='ssh production-backend-b'
+alias migrateNode='NODE_ENV=development node_modules/.bin/sequelize db:migrate'
+alias stopback='kill -9 `cat /Users/torstenschmickler/Documents/workspace/Veriff/back/tmp/pids/server.pid`'
+alias back='z back; rails s -d'
+alias front='z front;  pm2 start bin/www --name front --watch;'
+alias core='z core;  pm2 start bin/www --name core --watch;'
+alias demo='z demo; pm2 start bin/www --name demo --watch;'
+alias develop='back; front; core; demo;'
+alias stopdevelop='killrails; pm2 stop all;'
 
-source "$(brew --prefix)/etc/profile.d/z.sh"
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
